@@ -1,0 +1,6 @@
+DB_URL:192.168.37.132
+USER:breeze
+PASS:abc123
+SCHAME:test
+key1:value1
+key2:value2

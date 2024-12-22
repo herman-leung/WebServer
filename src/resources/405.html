@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>错误页面</title>
+    <style>
+        /* 基础样式 */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* 错误页面容器 */
+        .error-container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            text-align: center;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        /* 标题样式 */
+        .error-container h1 {
+            color: #333;
+            font-size: 2em;
+            margin-bottom: 1.5rem;
+        }
+
+        /* 描述文本样式 */
+        .error-container p {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 2rem;
+        }
+
+        /* 按钮样式 */
+        .error-container a {
+            display: inline-block;
+            padding: 0.75rem 2rem;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .error-container a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <h1>405 抱歉，出错了！</h1>
+        <p>您请求的页面不存在或无法访问。</p>
+        <a href="index.html">返回首页</a>
+    </div>
+</body>
+</html>

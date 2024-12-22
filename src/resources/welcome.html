@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>欢迎页面</title>
+    <style>
+        /* 基础样式 */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* 导航栏样式 */
+        .navbar {
+            background-color: #007bff;
+            color: #fff;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            color: #ddd;
+        }
+
+        /* 欢迎页面容器 */
+        .welcome-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            background: url('images/welcome-bg.jpg') no-repeat center center/cover; /* 可选背景图片 */
+        }
+
+        /* 标题样式 */
+        .welcome-container h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        /* 描述文本样式 */
+        .welcome-container p {
+            color: #666;
+            font-size: 1.2em;
+            max-width: 600px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        /* 底部版权信息 */
+        .footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1rem;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <div class="navbar">
+        <a href="index.html">返回首页</a>
+    </div>
+
+    <!-- 欢迎页面内容 -->
+    <div class="welcome-container">
+        <h1>欢迎您来到我们的网站！</h1>
+        <p>感谢您访问我们的网站。这里提供了丰富的资源和信息，希望能为您的需求提供帮助。</p>
+    </div>
+
+    <!-- 底部版权信息 -->
+    <div class="footer">
+        <p>微风中的快乐.</p>
+    </div>
+</body>
+</html>

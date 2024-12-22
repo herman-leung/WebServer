@@ -1,0 +1,207 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首页</title>
+    <style>
+          body {
+               font-family: Arial, sans-serif;
+               margin: 0;
+               padding: 0;
+               display: flex;
+               flex-direction: column;
+               align-items: center;
+               justify-content: center;
+               background-color: #f4f4f9;
+          }
+          .navbar {
+               width: 100%;
+               background-color: #333;
+               overflow: hidden;
+               position: fixed;
+               top: 0;
+               left: 0;
+          }
+          .navbar a {
+               float: left;
+               display: block;
+               color: white;
+               text-align: center;
+               padding: 14px 20px;
+               text-decoration: none;
+          }
+          .navbar a:hover {
+               background-color: #ddd;
+               color: black;
+          }
+          .content {
+               margin-top: 60px;
+               text-align: center;
+          }
+
+          /* 图片容器 */
+          #image .content {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+          gap: 15px;
+          width: 80%;
+          }
+
+          /* 图片样式 */
+          #image img {
+               width: 75%;
+               height: auto;
+               border-radius: 8px;
+               transition: transform 0.3s ease, box-shadow 0.3s ease;
+          }
+
+          /* 鼠标悬停效果 */
+          #image img:hover {
+               transform: scale(1.05);
+               box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+          }
+
+          #image {
+               display: flex;
+               flex-direction: column;
+               align-items: center;
+               justify-content: center;
+               padding: 20px;
+               background-color: #fff;
+               border-radius: 8px;
+               box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+               margin: 20px auto;
+               max-width: 1200px;
+               width: 95%;
+          }
+
+          video {
+               max-width: 80%;
+               border-radius: 8px;
+               box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          }
+
+
+
+     /* 输入框和按钮样式 */
+     input[type="text"],
+     input[type="password"],
+     button {
+     width: 100%;
+     padding: 0.75rem;
+     margin: 0.5rem 0;
+     border: 1px solid #ddd;
+     border-radius: 4px;
+     box-sizing: border-box;
+     font-size: 1rem;
+     transition: all 0.3s ease;
+     }
+
+     input[type="text"]:focus,
+     input[type="password"]:focus {
+     border-color: #007bff;
+     outline: none;
+     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+     }
+
+     button {
+     background-color: #007bff;
+     color: #fff;
+     border: none;
+     cursor: pointer;
+     font-weight: bold;
+     }
+
+     button:hover {
+          background-color: #0056b3;
+     }
+
+
+     /* 在较小屏幕上调整字体大小 */
+     @media (max-width: 480px) {
+          .content h1 {
+               font-size: 1.5em;
+          }
+
+          input[type="text"],
+          input[type="password"],
+          button {
+               font-size: 0.9rem;
+          }
+     }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="#image"><img src="https://img.alicdn.com/tfs/TB1xw72kKvoK1RjSZFqXXcXcpXa-128-128.png" alt="Image"> 图片</a>
+    <a href="#video">视频</a>
+    <a href="#login">登录</a>
+    <a href="#register">注册</a>
+</div>
+
+<div id="home" class="content">
+    <h1>欢迎</h1>
+</div>
+
+<div id="image" class="content" style="display:none;">
+    <h1>图片页面</h1>
+     <img src="images/1.jpg"/>
+     <img src="images/2.jpg"/>
+     <img src="images/3.jpg"/>
+     <img src="images/4.jpg"/>
+     <img src="images/5.jpg"/>
+     <img src="images/6.jpg"/>
+</div>
+
+<div id="video" class="content" style="display:none;">
+    <h1>视频页面</h1>
+    <video width="906" height="506" controls>
+        <source src="/video/bird.mp4" type="video/mp4">
+        您的浏览器不支持 HTML5 视频标签。
+    </video>
+</div>
+
+<div id="login" class="content" style="display:none;">
+     <div align="center">
+          <h1 class="wow fadeInUp" data-wow-delay="0.6s">登录</h1>
+          <form action="login" method="post">
+               <div align="center"><input type="text" name="username" placeholder="用户名"
+                         required="required"></div><br />
+               <div align="center"><input type="password" name="password" placeholder="用户密码"
+                         required="required"></div><br />
+               <div align="center"><button type="submit">确认</button></div>
+          </form>
+     </div>
+</div>
+
+<div id="register" class="content" style="display:none;">
+     <div align="center">
+          <h1>注册</h1>
+          <form action="register" method="post">
+               <div align="center"><input type="text" name="username" placeholder="用户名"
+                         required="required"></div><br />
+               <div align="center"><input type="password" name="password" placeholder="用户密码"
+                         required="required"></div><br />
+               <div align="center"><button type="submit">确认</button></div>
+          </form>
+     </div>
+</div>
+
+<script>
+document.querySelectorAll('.navbar a').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelectorAll('.content').forEach(content => content.style.display = 'none');
+        document.querySelector(this.getAttribute('href')).style.display = 'block';
+    });
+});
+</script>
+
+</body>
+</html>
+
+
+

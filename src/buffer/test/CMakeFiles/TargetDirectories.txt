@@ -1,0 +1,3 @@
+/home/breeze/cpp/a_forwork/breWebServer/src/buffer/test/CMakeFiles/TestBuffer.dir
+/home/breeze/cpp/a_forwork/breWebServer/src/buffer/test/CMakeFiles/edit_cache.dir
+/home/breeze/cpp/a_forwork/breWebServer/src/buffer/test/CMakeFiles/rebuild_cache.dir

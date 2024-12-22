@@ -1,0 +1,3 @@
+/home/breeze/cpp/a_forwork/breWebServer/src/pool/test/CMakeFiles/testSqlconnpool.dir
+/home/breeze/cpp/a_forwork/breWebServer/src/pool/test/CMakeFiles/edit_cache.dir
+/home/breeze/cpp/a_forwork/breWebServer/src/pool/test/CMakeFiles/rebuild_cache.dir
