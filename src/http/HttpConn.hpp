@@ -151,7 +151,7 @@ private:
 
     bool isClose;
     
-    int iovCnt; // iov计数, 1表示只有iov[0], 2表示iov[0]和iov[1]
+    int iovCnt;             // iov计数, 1表示只有iov[0], 2表示iov[0]和iov[1]
     struct iovec iov[2];    // iov[0]指向writeBuff, iov[1]指向文件
     
     Buffer readBuff; // 读缓冲区

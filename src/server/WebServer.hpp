@@ -119,7 +119,7 @@ public:
     }
 
     void Stop() {
-        
+        isClose = true;
     }
 private:
     bool initSocket() {
@@ -149,6 +149,7 @@ private:
             return false;
         }
         int opt = 1;
+
         ret = setsockopt(listenFd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
         if (ret < 0) {
             close(listenFd);
@@ -157,10 +158,8 @@ private:
         }
 
         ret = bind(listenFd, (sockaddr*)&addr, sizeof(addr));
-        std::cout << "ret: " << ret << std::endl;
         if (ret < 0) {
             close(listenFd);
-            std::cout << strerror(errno) << std::endl;
             Log::err("Bind port: {} error: {}", port, strerror(errno));
             return false;
         }
@@ -174,14 +173,13 @@ private:
         }
 
 
-
-
         ret = epoller->AddFd(listenFd, EPOLLIN | listenEvent);
         if (ret == 0) {
             close(listenFd);
             Log::err("Add listen error");
             return false;
         }
+
 
         setFdNonblock(listenFd);
         Log::info("Server port: {}", port);
@@ -272,6 +270,7 @@ private:
         }
         close(fd);
     }
+    
     void extentTime(HttpConn* client) {
         if (client == nullptr) {
             Log::err("client is nullptr");
