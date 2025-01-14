@@ -1,1 +1,0 @@
-/usr/bin/g++ CMakeFiles/TestBuffer.dir/testBuffer.cpp.o -o /home/breeze/cpp/a_forwork/breWebServer/src/buffer/TestBuffer

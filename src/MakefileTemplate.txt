@@ -1,8 +1,8 @@
 # 定义变量
 CXX = g++
 CXXFLAGS = -std=c++20 -Wall -Wextra
-TARGET = test_heapTimer
-SRC = testHeapTimer.cpp
+TARGET = yourProgram
+SRC = yourProgram.cpp
 OBJ = $(SRC:.cpp=.o)
 
 # 默认目标
@@ -10,7 +10,7 @@ all: $(TARGET)
 
 # 链接目标
 $(TARGET): $(OBJ)
-	$(CXX) $(CXXFLAGS) -o $@ $^
+	$(CXX) $(CXXFLAGS) -o $@ $^ -L/usr/lib/mysql-connector-c++ -lmysqlcppconn
 
 # 编译源文件
 %.o: %.cpp
