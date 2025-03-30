@@ -45,6 +45,13 @@ namespace bre
             timeoutMS = stoi(conf.Get("TIMEOUT").value_or("5000"));
             // 获取资源路径
             srcDir = std::filesystem::current_path().string() + conf.Get("PATH").value_or("/resources");
+            std::cout << "srcDir////////////////////////////////" << std::endl;
+            std::cout << "srcDir////////////////////////////////" << std::endl;
+            std::cout << "srcDir////////////////////////////////" << std::endl;
+            std::cout << "srcDir////////////////////////////////" << std::endl;
+            std::cout << "srcDir: " << srcDir << std::endl;
+            std::cout << "srcDir////////////////////////////////" << std::endl;
+            std::cout << "srcDir////////////////////////////////" << std::endl;
             // 初始化 HttpConn
             HttpConn::UserCount = 0;
             HttpConn::SrcDir = srcDir.c_str();

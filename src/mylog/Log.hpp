@@ -8,7 +8,7 @@
 #include <string>
 #include <fstream>
 #include <mutex>
-#include <thread>afsdfsdf
+#include <thread>
 #include <filesystem>
 #include <format>
 #include <chrono>
