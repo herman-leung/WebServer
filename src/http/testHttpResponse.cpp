@@ -1,6 +1,6 @@
 #include "HttpResponse.hpp"
 #include "../buffer/Buffer.hpp"
-#include "../log/Log.hpp"
+#include "../mylog/Log.hpp"
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -10,17 +10,20 @@
 using namespace bre;
 using namespace std;
 
-
-void test_init_and_destruct() {
+void test_init_and_destruct()
+{
     Buffer buff;
     HttpResponse resp;
-    try {
+    try
+    {
         string path = "/index.html";
         resp.Init(".", path);
         assert(resp.path == "/index.html");
         assert(resp.srcDir == ".");
         assert(!resp.mmFile); // 没有调用MakeResponse前，mmFile应为nullptr
-    } catch (...) {
+    }
+    catch (...)
+    {
         assert(false);
     }
     resp.MakeResponse(buff);
@@ -32,7 +35,8 @@ void test_init_and_destruct() {
     std::cout << "Test init and destruct success!" << std::endl;
 }
 
-void test_add_state_line() {
+void test_add_state_line()
+{
     Buffer buff;
     HttpResponse resp;
     string path = "/test.html";
@@ -49,7 +53,8 @@ void test_add_state_line() {
     assert(content == "HTTP/1.1 404 Not Found\r\n");
 }
 
-void test_add_header() {
+void test_add_header()
+{
     Buffer buff;
     HttpResponse resp;
     string path = "/test.html";
@@ -61,12 +66,13 @@ void test_add_header() {
     resp.isKeepAlive = false;
     resp.addHeader(buff);
     content = buff.RetrieveAll();
-    cout  << content << endl;
+    cout << content << endl;
     assert(content.find("Connection: close") != std::string::npos);
     std::cout << "Test add header success!" << std::endl;
 }
 
-void test_get_file_type() {
+void test_get_file_type()
+{
     HttpResponse resp;
     resp.path = "/test.html";
     assert(resp.getFileType() == "text/html");
@@ -78,7 +84,8 @@ void test_get_file_type() {
     std::cout << "Test get file type success!" << std::endl;
 }
 
-void test_error_content() {
+void test_error_content()
+{
     Buffer buff;
     HttpResponse resp;
     resp.ErrorContent(buff, "File NotFound!");
@@ -90,7 +97,8 @@ void test_error_content() {
     std::cout << "Test error content success!" << std::endl;
 }
 
-int main() {
+int main()
+{
     test_init_and_destruct();
     test_add_state_line();
     test_add_header();
