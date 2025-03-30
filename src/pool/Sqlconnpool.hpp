@@ -2,7 +2,12 @@
 #define SQLCONNPOOL_H
 
 #include "../config/Config.hpp"
-#include <mysql/jdbc.h>
+// #include <mysql/jdbc.h>
+
+#include <mysql_driver.h>
+#include <mysql_connection.h>
+#include <cppconn/statement.h>
+#include <cppconn/prepared_statement.h>
 #include <string>
 #include <queue>
 #include <mutex>
@@ -11,19 +16,25 @@
 #include <chrono>
 #include <memory>
 
-namespace bre {
+#include <atomic>
+
+namespace bre
+{
 	using namespace std::chrono_literals;
 	using namespace std::chrono;
 
-	using std::unique_ptr;
 	using std::string;
+	using std::unique_ptr;
 
-	class MySqlPool {
+	class MySqlPool
+	{
 	public:
-		static MySqlPool& Instance() {
+		static MySqlPool &Instance()
+		{
 			static MySqlPool instance;
 			static std::once_flag flag;
-			std::call_once(flag, [&]() {
+			std::call_once(flag, [&]()
+										 {
 				try {
 					auto& config = Config::getInstance();
 
@@ -36,46 +47,52 @@ namespace bre {
 				} catch(const std::exception& e) {
 					std::cerr << "sql read config has no value: " <<e.what() << '\n';
 					throw;
-				}
-			});
+				} });
 			return instance;
 		}
 
 		MySqlPool() = default;
 
-		void Init(const std::string& Url, const std::string& User, const std::string& Pass,
-			const std::string& Schema, int PoolSize = 8) {
+		void Init(const std::string &Url, const std::string &User, const std::string &Pass,
+							const std::string &Schema, int PoolSize = 8)
+		{
 			url = Url;
 			user = User;
-			pass = Pass; 
+			pass = Pass;
 			schema = Schema;
 			poolSize = PoolSize;
-			b_stop = false; 
-			try {
-				for (int i = 0; i < poolSize; ++i) {
-					sql::mysql::MySQL_Driver* driver = sql::mysql::get_mysql_driver_instance();
-					sql::Connection* con = driver->connect(url.c_str(), user.c_str(), pass.c_str());
+			b_stop = false;
+			try
+			{
+				for (int i = 0; i < poolSize; ++i)
+				{
+					sql::mysql::MySQL_Driver *driver = sql::mysql::get_mysql_driver_instance();
+					sql::Connection *con = driver->connect(url.c_str(), user.c_str(), pass.c_str());
 					con->setSchema(schema);
 					pool.emplace(con);
 				}
 			}
-			catch (sql::SQLException& e) {
+			catch (sql::SQLException &e)
+			{
 				std::cout << "sql::SQLException, error is " << e.what() << std::endl;
 			}
-			catch (std::exception& e) {
+			catch (std::exception &e)
+			{
 				std::cout << "mysql pool init failed, error is " << e.what() << std::endl;
 			}
 		}
 
-
-		std::unique_ptr<sql::Connection> GetConn() {
+		std::unique_ptr<sql::Connection> GetConn()
+		{
 			std::unique_lock<std::mutex> lock(mux);
-			cond.wait(lock, [this] {
+			cond.wait(lock, [this]
+								{
 				if (b_stop) {
 					return true;
 				}
 				return !pool.empty(); });
-			if (b_stop) {
+			if (b_stop)
+			{
 				return nullptr;
 			}
 			std::unique_ptr<sql::Connection> con(std::move(pool.front()));
@@ -83,51 +100,59 @@ namespace bre {
 			return con;
 		}
 
-
-		void FreeConn(std::unique_ptr<sql::Connection> con) {
+		void FreeConn(std::unique_ptr<sql::Connection> con)
+		{
 			std::unique_lock<std::mutex> lock(mux);
-			if (b_stop) {
+			if (b_stop)
+			{
 				return;
 			}
 			pool.push(std::move(con));
 			cond.notify_one();
 		}
 
-
-		void Close() {
+		void Close()
+		{
 			b_stop = true;
 			cond.notify_all();
 		}
 
-
-		~MySqlPool() {
+		~MySqlPool()
+		{
 			std::unique_lock<std::mutex> lock(mux);
-			if (!b_stop) {
+			if (!b_stop)
+			{
 				Close();
 			}
 
-			while (!pool.empty()) {
+			while (!pool.empty())
+			{
 				pool.pop();
 			}
 		}
+
 	private:
-		void checkConnection() {
+		void checkConnection()
+		{
 			std::lock_guard lock(mux);
-			for (int i = 0; i < static_cast<int>(pool.size()); i++) {
+			for (int i = 0; i < static_cast<int>(pool.size()); i++)
+			{
 				auto con = std::move(pool.front());
 				pool.pop();
 
-				try {
+				try
+				{
 					std::cout << "checkConnection" << i << "\n";
 					std::unique_ptr<sql::Statement> stmt(con->createStatement());
 					stmt->executeQuery("SELECT 1");
 				}
-				catch (sql::SQLException& e) {
+				catch (sql::SQLException &e)
+				{
 					con->close();
 					std::cout << "Error keeping connection alive: " << e.what() << std::endl;
 					// 重新创建连接并替换旧的连接
-					sql::mysql::MySQL_Driver* driver = sql::mysql::get_mysql_driver_instance();
-					auto* newcon = driver->connect(url, user, pass);
+					sql::mysql::MySQL_Driver *driver = sql::mysql::get_mysql_driver_instance();
+					auto *newcon = driver->connect(url, user, pass);
 					newcon->setSchema(schema);
 					con.reset(newcon);
 				}
@@ -140,7 +165,7 @@ namespace bre {
 		std::string user;
 		std::string pass;
 		std::string schema;
-		
+
 		int poolSize;
 		std::queue<std::unique_ptr<sql::Connection>> pool;
 		std::mutex mux;
